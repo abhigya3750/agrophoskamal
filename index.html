@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Agro Phos India Limited — Redesign</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500;700;800;900&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --soil:#241a10;
+    --soil-deep:#180f08;
+    --wheat:#d6a339;
+    --wheat-light:#f0cf7f;
+    --leaf:#4c7c3f;
+    --leaf-deep:#33512a;
+    --parchment:#f2ead4;
+    --paper:#fbf6ea;
+    --rust:#a5402a;
+    --ink:#241c12;
+    --ink-soft:#5b5140;
+    --line: rgba(36,26,16,0.16);
+    --up:#3f7d3a;
+    --down:#a5402a;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Work Sans', sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  body.lang-hi{font-family:'Hind', 'Work Sans', sans-serif;}
+  body.lang-hi h1, body.lang-hi h2, body.lang-hi h3, body.lang-hi h4{font-family:'Hind', serif; font-weight:700;}
+  h1,h2,h3,h4{font-family:'Roboto Slab', serif; letter-spacing:-0.01em;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  a{color:inherit;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    text-transform:uppercase;
+    letter-spacing:0.14em;
+    font-size:12px;
+    font-weight:600;
+    color:var(--leaf-deep);
+    display:flex; align-items:center; gap:8px;
+  }
+  body.lang-hi .eyebrow{font-family:'Hind', monospace; letter-spacing:0.02em; text-transform:none; font-weight:600;}
+  .eyebrow::before{content:""; width:16px; height:2px; background:var(--rust); display:inline-block; flex-shrink:0;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600; font-size:13px; letter-spacing:0.04em;
+    text-transform:uppercase;
+    padding:14px 24px;
+    border-radius:3px;
+    cursor:pointer;
+    border:1.5px solid transparent;
+    text-decoration:none;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  body.lang-hi .btn{font-family:'Hind'; text-transform:none; letter-spacing:0;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--wheat); color:var(--soil-deep); box-shadow:3px 3px 0 var(--soil);}
+  .btn-primary:hover{box-shadow:5px 5px 0 var(--soil);}
+  .btn-outline{background:transparent; border-color:var(--parchment); color:var(--parchment);}
+  .btn-ghost-dark{background:transparent; border-color:var(--soil); color:var(--soil);}
+
+  /* ===== NAV ===== */
+  header{
+    position:sticky; top:0; z-index:100;
+    background:var(--soil-deep);
+    border-bottom:1px solid rgba(214,163,57,0.25);
+  }
+  .topline{
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--wheat-light);
+    padding:6px 0; opacity:0.85; flex-wrap:wrap; gap:6px;
+  }
+  .topline .wrap{display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:8px;}
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 0; position:relative;
+  }
+  .brand{display:flex; align-items:center; gap:10px; text-decoration:none;}
+  .brand-mark{
+    width:42px; height:42px; border-radius:50%;
+    background:conic-gradient(from 220deg, var(--wheat), var(--leaf), var(--wheat));
+    display:flex; align-items:center; justify-content:center;
+    color:var(--soil-deep); font-family:'Roboto Slab'; font-weight:900; font-size:19px;
+    border:2px solid var(--soil-deep); flex-shrink:0;
+  }
+  .brand-word{color:var(--parchment); font-family:'Roboto Slab'; font-weight:800; font-size:20px; line-height:1;}
+  .brand-word span{display:block; font-family:'IBM Plex Mono'; font-size:10px; font-weight:500; color:var(--wheat); letter-spacing:0.18em; margin-top:3px;}
+  .navlinks{display:flex; gap:26px; list-style:none; align-items:center;}
+  .navlinks a{
+    color:var(--parchment); text-decoration:none; font-size:14.5px; font-weight:500;
+    position:relative; padding:4px 0; white-space:nowrap;
+  }
+  .navlinks a::after{content:""; position:absolute; left:0; bottom:-3px; width:0; height:2px; background:var(--wheat); transition:width .2s ease;}
+  .navlinks a:hover::after{width:100%;}
+  .navcta{display:flex; gap:10px; align-items:center;}
+  .lang-toggle{
+    display:flex; align-items:center; background:rgba(242,234,212,0.08);
+    border:1px solid rgba(214,163,57,0.35); border-radius:20px; padding:3px; gap:2px;
+    font-family:'IBM Plex Mono'; font-size:11.5px; font-weight:700;
+  }
+  .lang-toggle button{
+    border:none; background:transparent; color:#c9bd9c; padding:6px 12px; border-radius:16px;
+    cursor:pointer; transition:background .15s ease, color .15s ease;
+  }
+  .lang-toggle button.active{background:var(--wheat); color:var(--soil-deep);}
+  .burger{display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px; z-index:60;}
+  .burger span{width:24px; height:2px; background:var(--parchment); transition:transform .2s ease, opacity .2s ease;}
+  .burger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .burger.is-open span:nth-child(2){opacity:0;}
+  .burger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  /* ===== TICKER ===== */
+  .ticker-bar{
+    background:var(--leaf-deep);
+    border-top:1px solid rgba(240,207,127,0.25);
+    border-bottom:1px solid rgba(0,0,0,0.2);
+    overflow:hidden; white-space:nowrap; position:relative;
+  }
+  .ticker-bar::before, .ticker-bar::after{
+    content:""; position:absolute; top:0; bottom:0; width:60px; z-index:2; pointer-events:none;
+  }
+  .ticker-bar::before{left:0; background:linear-gradient(90deg, var(--leaf-deep), transparent);}
+  .ticker-bar::after{right:0; background:linear-gradient(270deg, var(--leaf-deep), transparent);}
+  .ticker-track{
+    display:inline-flex; align-items:center; gap:46px;
+    padding:9px 0;
+    animation:scroll-left 28s linear infinite;
+  }
+  .ticker-item{
+    font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--parchment);
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .ticker-item b{color:var(--wheat-light); font-weight:600;}
+  .dot-live{width:7px; height:7px; border-radius:50%; background:#7be07b; box-shadow:0 0 0 0 rgba(123,224,123,.7); animation:pulse 1.6s infinite; flex-shrink:0;}
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(123,224,123,.6);}
+    70%{box-shadow:0 0 0 7px rgba(123,224,123,0);}
+    100%{box-shadow:0 0 0 0 rgba(123,224,123,0);}
+  }
+  @keyframes scroll-left{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-50%);}
+  }
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative; overflow:hidden;
+    background:
+      radial-gradient(ellipse at 80% -10%, rgba(214,163,57,0.18), transparent 55%),
+      linear-gradient(180deg, var(--soil-deep) 0%, var(--soil) 60%, #2c2013 100%);
+    color:var(--parchment);
+    padding:64px 0 90px;
+  }
+  .hero .furrows{
+    position:absolute; inset:0; opacity:0.09;
+    background-image:repeating-linear-gradient(100deg, transparent 0 34px, var(--wheat) 34px 36px);
+    pointer-events:none;
+  }
+  .hero-grid{display:grid; grid-template-columns:1.15fr 0.85fr; gap:56px; align-items:center; position:relative;}
+  .hero-eyebrow{color:var(--wheat-light);}
+  .hero-eyebrow::before{background:var(--wheat-light);}
+  .hero h1{
+    font-size:clamp(32px, 5.4vw, 66px);
+    line-height:1.08; margin:18px 0 22px; font-weight:900;
+    color:var(--parchment);
+  }
+  .hero h1 em{
+    font-style:italic; color:var(--wheat); font-weight:800;
+  }
+  body.lang-hi .hero h1 em{font-style:normal;}
+  .hero p.lede{font-size:17px; line-height:1.65; max-width:520px; color:#e7dcc0; margin-bottom:32px;}
+  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:38px;}
+  .hero-badges{display:flex; gap:26px; flex-wrap:wrap;}
+  .hero-badge{display:flex; flex-direction:column;}
+  .hero-badge b{font-family:'Roboto Slab'; font-size:26px; color:var(--wheat-light);}
+  .hero-badge span{font-family:'IBM Plex Mono'; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:#c9bd9c;}
+  body.lang-hi .hero-badge span{font-family:'Hind'; text-transform:none; letter-spacing:0;}
+
+  .board{
+    background:var(--parchment);
+    border-radius:6px;
+    padding:26px;
+    position:relative;
+    box-shadow: 10px 12px 0 rgba(0,0,0,0.35);
+    border:1px solid rgba(0,0,0,0.15);
+    transform:rotate(1.2deg);
+    max-width:100%;
+  }
+  .board::before{
+    content:"NSE : AGROPHOS";
+    position:absolute; top:-13px; left:24px;
+    background:var(--rust); color:var(--parchment);
+    font-family:'IBM Plex Mono'; font-size:11px; font-weight:700; letter-spacing:0.08em;
+    padding:5px 12px; border-radius:2px; transform:rotate(-2deg);
+    box-shadow:2px 2px 0 rgba(0,0,0,0.3);
+  }
+  .board-head{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px; gap:10px; flex-wrap:wrap;}
+  .board-head .status{
+    display:flex; align-items:center; gap:6px; font-family:'IBM Plex Mono'; font-size:11px; color:var(--leaf-deep); font-weight:600;
+  }
+  body.lang-hi .board-head .status{font-family:'Hind';}
+  .board-price{font-family:'IBM Plex Mono'; font-weight:700; font-size:clamp(38px,8vw,52px); color:var(--soil-deep); line-height:1;}
+  .board-change{font-family:'IBM Plex Mono'; font-weight:600; font-size:15px; margin-top:6px;}
+  .board-change.up{color:var(--up);}
+  .board-change.down{color:var(--down);}
+  .board-spark{margin:16px 0 6px; width:100%; height:auto;}
+  .board-meta{display:grid; grid-template-columns:1fr 1fr; gap:10px 18px; margin-top:14px; border-top:1px dashed var(--line); padding-top:14px;}
+  .board-meta div{font-family:'IBM Plex Mono'; font-size:11.5px; color:var(--ink-soft); display:flex; justify-content:space-between; gap:6px;}
+  .board-meta div b{color:var(--ink); font-weight:600;}
+  body.lang-hi .board-meta div{font-family:'Hind'; font-size:13px;}
+  .board-note{font-size:10.5px; color:var(--ink-soft); margin-top:14px; line-height:1.5;}
+  body.lang-hi .board-note{font-size:12px;}
+
+  section{padding:80px 0;}
+  .section-head{max-width:640px; margin-bottom:52px;}
+  .section-head h2{font-size:clamp(26px,3.6vw,42px); margin-top:14px; font-weight:800; color:var(--soil-deep);}
+  .section-head p{color:var(--ink-soft); font-size:16px; line-height:1.6; margin-top:14px;}
+  .section-head.on-dark h2, .section-head.on-dark p{color:var(--parchment);}
+  .section-head.on-dark p{color:#cfc4a2;}
+
+  .about{background:var(--paper);}
+  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start;}
+  .about-copy p{font-size:15.5px; line-height:1.75; color:var(--ink-soft); margin-bottom:16px;}
+  .stamp{
+    display:inline-flex; align-items:center; gap:10px;
+    border:2px solid var(--leaf); color:var(--leaf-deep);
+    font-family:'IBM Plex Mono'; font-weight:700; font-size:12px; letter-spacing:0.06em;
+    padding:10px 16px; border-radius:40px; margin-top:18px; transform:rotate(-1.5deg);
+  }
+  body.lang-hi .stamp{font-family:'Hind'; letter-spacing:0;}
+  .about-facts{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+  .fact{background:var(--paper); padding:26px 22px;}
+  .fact b{font-family:'Roboto Slab'; font-size:32px; display:block; color:var(--rust);}
+  .fact span{font-family:'IBM Plex Mono'; font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink-soft);}
+  body.lang-hi .fact span{font-family:'Hind'; text-transform:none; letter-spacing:0; font-size:13px;}
+  .cin-line{margin-top:22px; font-family:'IBM Plex Mono'; font-size:12px; color:var(--ink-soft); border-top:1px dashed var(--line); padding-top:16px;}
+  body.lang-hi .cin-line{font-family:'Hind'; font-size:13.5px;}
+
+  .products{background:var(--soil-deep); color:var(--parchment); position:relative; overflow:hidden;}
+  .products::before{
+    content:""; position:absolute; inset:0; opacity:0.05;
+    background-image:repeating-linear-gradient(0deg, transparent 0 30px, var(--wheat) 30px 31px);
+  }
+  .prod-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px; position:relative;}
+  .sack{
+    background:var(--parchment); color:var(--ink); border-radius:10px;
+    padding:26px 24px 24px; position:relative;
+    border-top:6px solid var(--leaf);
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .sack:nth-child(2n){border-top-color:var(--rust);}
+  .sack:nth-child(3n){border-top-color:var(--wheat);}
+  .sack:hover{transform:translateY(-6px); box-shadow:0 16px 30px rgba(0,0,0,0.35);}
+  .sack .num{font-family:'IBM Plex Mono'; font-size:11px; color:var(--ink-soft); letter-spacing:0.1em;}
+  .sack h3{font-size:19px; margin:10px 0 8px; color:var(--soil-deep);}
+  .sack p{font-size:13.8px; color:var(--ink-soft); line-height:1.55;}
+  .sack .tag{
+    display:inline-block; margin-top:14px; font-family:'IBM Plex Mono'; font-size:10.5px;
+    background:var(--soil-deep); color:var(--wheat-light); padding:4px 10px; border-radius:20px; letter-spacing:0.04em;
+  }
+  body.lang-hi .sack .tag{font-family:'Hind'; letter-spacing:0;}
+
+  .psu{background:var(--paper);}
+  .psu-table-wrap{overflow-x:auto; border-radius:8px; border:1px solid var(--line); -webkit-overflow-scrolling:touch;}
+  table{width:100%; border-collapse:collapse; min-width:680px;}
+  thead th{
+    background:var(--leaf-deep); color:var(--parchment);
+    font-family:'IBM Plex Mono'; font-size:11.5px; text-transform:uppercase; letter-spacing:0.05em;
+    text-align:left; padding:14px 18px; font-weight:600; white-space:nowrap;
+  }
+  body.lang-hi thead th{font-family:'Hind'; text-transform:none; letter-spacing:0;}
+  tbody td{padding:15px 18px; font-size:14.5px; border-top:1px solid var(--line); color:var(--ink);}
+  tbody tr:nth-child(odd){background:rgba(76,124,63,0.05);}
+  tbody td.num{font-family:'IBM Plex Mono'; font-weight:600; color:var(--rust);}
+
+  .stockdash{background:linear-gradient(180deg,#1c140d,#241a10); color:var(--parchment);}
+  .dash-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:40px; align-items:stretch;}
+  .dash-main{
+    background:rgba(242,234,212,0.04); border:1px solid rgba(214,163,57,0.25); border-radius:12px;
+    padding:32px; display:flex; flex-direction:column; min-width:0;
+  }
+  .dash-top{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:14px;}
+  .dash-price{font-family:'IBM Plex Mono'; font-weight:700; font-size:clamp(38px,7vw,64px); line-height:1;}
+  .dash-change{font-family:'IBM Plex Mono'; font-size:16px; font-weight:600; margin-top:8px;}
+  .dash-status{display:flex; align-items:center; gap:8px; font-family:'IBM Plex Mono'; font-size:12px; color:#c9bd9c;}
+  body.lang-hi .dash-status{font-family:'Hind';}
+  .dash-chart{margin-top:26px; flex:1; min-height:160px; width:100%; height:auto;}
+  .dash-foot{display:flex; justify-content:space-between; font-family:'IBM Plex Mono'; font-size:11px; color:#c9bd9c; margin-top:10px; flex-wrap:wrap; gap:6px;}
+  body.lang-hi .dash-foot{font-family:'Hind'; font-size:12.5px;}
+  .dash-stats{display:grid; grid-template-columns:1fr 1fr; gap:16px; align-content:start;}
+  .stat-card{
+    background:rgba(242,234,212,0.04); border:1px solid rgba(214,163,57,0.2); border-radius:10px; padding:20px;
+  }
+  .stat-card span{font-family:'IBM Plex Mono'; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:#c9bd9c;}
+  body.lang-hi .stat-card span{font-family:'Hind'; text-transform:none; letter-spacing:0; font-size:12.5px;}
+  .stat-card b{display:block; font-family:'Roboto Slab'; font-size:24px; margin-top:8px; color:var(--wheat-light);}
+  .dash-disclaimer{
+    grid-column:1 / -1; font-size:12.5px; color:#c9bd9c; line-height:1.6;
+    border-top:1px dashed rgba(214,163,57,0.3); padding-top:16px; margin-top:6px;
+  }
+  body.lang-hi .dash-disclaimer{font-size:13.5px;}
+
+  .tradedesk{background:var(--parchment);}
+  .td-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:48px; align-items:flex-start;}
+  .td-info h3{font-size:22px; margin-bottom:14px; color:var(--soil-deep);}
+  .td-info p{color:var(--ink-soft); font-size:15px; line-height:1.7; margin-bottom:22px;}
+  .td-steps{list-style:none;}
+  .td-steps li{display:flex; gap:14px; padding:14px 0; border-top:1px solid var(--line);}
+  .td-steps li:first-child{border-top:none;}
+  .td-steps .n{font-family:'IBM Plex Mono'; font-weight:700; color:var(--rust); font-size:13px; flex-shrink:0; width:26px;}
+  .td-steps strong{display:block; font-size:14.5px; margin-bottom:3px;}
+  .td-steps span{font-size:13.5px; color:var(--ink-soft);}
+
+  .slip{
+    background:var(--paper); border-radius:10px; border:1px solid var(--line);
+    box-shadow:8px 8px 0 rgba(36,26,16,0.08);
+    padding:34px; position:relative; min-width:0;
+  }
+  .slip::before{
+    content:"ENQUIRY / REQUISITION SLIP";
+    position:absolute; top:-12px; left:28px; background:var(--wheat); color:var(--soil-deep);
+    font-family:'IBM Plex Mono'; font-size:10.5px; font-weight:700; letter-spacing:0.08em;
+    padding:5px 12px; border-radius:2px; max-width:calc(100% - 40px);
+  }
+  body.lang-hi .slip::before{font-family:'Hind'; letter-spacing:0; content:"पूछताछ / रिक्विज़िशन स्लिप";}
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;}
+  .form-row.full{grid-template-columns:1fr;}
+  label{
+    display:block; font-family:'IBM Plex Mono'; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em;
+    color:var(--ink-soft); margin-bottom:7px; font-weight:600;
+  }
+  body.lang-hi label{font-family:'Hind'; text-transform:none; letter-spacing:0; font-size:12.5px;}
+  input, select, textarea{
+    width:100%; padding:12px 14px; border:1.5px solid var(--line); border-radius:5px;
+    font-family:'Work Sans'; font-size:14.5px; background:#fff; color:var(--ink);
+  }
+  body.lang-hi input, body.lang-hi select, body.lang-hi textarea{font-family:'Hind';}
+  input:focus, select:focus, textarea:focus{outline:2px solid var(--leaf); outline-offset:1px; border-color:var(--leaf);}
+  textarea{resize:vertical; min-height:90px;}
+  .slip-submit{width:100%; justify-content:center; margin-top:6px; background:var(--rust); color:var(--parchment); box-shadow:3px 3px 0 var(--soil-deep); border:none;}
+  .slip-submit:hover{box-shadow:5px 5px 0 var(--soil-deep);}
+  .toast{display:none; margin-top:16px; padding:12px 16px; border-radius:6px; background:rgba(76,124,63,0.12); border:1px solid var(--leaf); color:var(--leaf-deep); font-size:13.5px; font-weight:500;}
+
+  .voices{background:var(--soil-deep); color:var(--parchment);}
+  .voice-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  .voice-card{background:rgba(242,234,212,0.05); border:1px solid rgba(214,163,57,0.2); border-radius:10px; padding:28px;}
+  .voice-card p{font-size:15.5px; line-height:1.65; color:#e7dcc0; font-style:italic;}
+  .voice-who{display:flex; align-items:center; gap:12px; margin-top:20px;}
+  .voice-avatar{width:40px; height:40px; border-radius:50%; background:var(--wheat); display:flex; align-items:center; justify-content:center; font-family:'Roboto Slab'; font-weight:800; color:var(--soil-deep); flex-shrink:0;}
+  .voice-who b{display:block; font-size:14px;}
+  .voice-who span{font-size:12px; color:#c9bd9c;}
+
+  footer{background:var(--leaf-deep); color:var(--parchment); padding:70px 0 26px; position:relative;}
+  .foot-grid{display:grid; grid-template-columns:1.3fr 1fr 1fr 1.2fr; gap:36px; padding-bottom:40px; border-bottom:1px solid rgba(240,234,212,0.15);}
+  .foot-grid h4{font-size:16px; margin-bottom:16px;}
+  .foot-grid p{font-size:13.8px; color:#d7e0cf; line-height:1.6;}
+  .foot-links{list-style:none;}
+  .foot-links li{margin-bottom:10px; font-size:13.8px;}
+  .foot-links a{text-decoration:none; color:#e7ecdf;}
+  .foot-links a:hover{color:var(--wheat-light);}
+  .foot-bottom{display:flex; justify-content:space-between; padding-top:22px; font-size:12.5px; color:#c3d0ba; flex-wrap:wrap; gap:10px;}
+
+  @media (max-width: 880px){
+    .navlinks{
+      display:none; flex-direction:column; align-items:flex-start;
+      position:absolute; top:100%; left:0; right:0;
+      background:var(--soil-deep); padding:18px 28px 26px; gap:16px;
+      border-bottom:1px solid rgba(214,163,57,0.3);
+      box-shadow:0 14px 24px rgba(0,0,0,0.4);
+    }
+    .navlinks.open{display:flex;}
+    .navcta .btn-outline{display:none;}
+    .burger{display:flex;}
+    .hero{padding-top:36px;}
+    .hero-grid, .about-grid, .dash-grid, .td-grid{grid-template-columns:1fr;}
+    .prod-grid{grid-template-columns:1fr 1fr;}
+    .foot-grid{grid-template-columns:1fr 1fr;}
+    .board{transform:none;}
+    .form-row{grid-template-columns:1fr;}
+    section{padding:60px 0;}
+    .wrap{padding:0 20px;}
+  }
+  @media (max-width: 560px){
+    .prod-grid{grid-template-columns:1fr;}
+    .foot-grid{grid-template-columns:1fr;}
+    .about-facts{grid-template-columns:1fr;}
+    .dash-stats{grid-template-columns:1fr;}
+    .voice-grid{grid-template-columns:1fr;}
+    .hero-badges{gap:18px 26px;}
+    .board-meta{grid-template-columns:1fr;}
+    .brand-word{font-size:17px;}
+    .brand-word span{font-size:9px;}
+    .lang-toggle button{padding:6px 9px; font-size:10.5px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .ticker-track{animation:none;}
+    .dot-live{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="topline">
+    <div class="wrap">
+      <span data-i18n="topCin">CIN: L24123MP2002PLC015285</span>
+      <span>info@agrophos.com &nbsp;·&nbsp; 0731-2529488</span>
+    </div>
+  </div>
+  <div class="wrap">
+    <nav>
+      <a href="#top" class="brand">
+        <div class="brand-mark">A</div>
+        <div class="brand-word">AGRO PHOS<span data-i18n="brandTag">INDIA LIMITED · EST. 2002</span></div>
+      </a>
+      <ul class="navlinks" id="navLinks">
+        <li><a href="#about" data-i18n="navAbout">About</a></li>
+        <li><a href="#products" data-i18n="navProducts">Products</a></li>
+        <li><a href="#stock" data-i18n="navStock">Stock</a></li>
+        <li><a href="#tradedesk" data-i18n="navTrade">Trade Desk</a></li>
+        <li><a href="#contact" data-i18n="navContact">Contact</a></li>
+      </ul>
+      <div class="navcta">
+        <div class="lang-toggle" role="group" aria-label="Language switch">
+          <button type="button" id="btnEn" class="active">EN</button>
+          <button type="button" id="btnHi">हिं</button>
+        </div>
+        <a href="#stock" class="btn btn-outline" style="padding:10px 18px;" data-i18n="ctaLivePrice">Live Price</a>
+        <a href="#tradedesk" class="btn btn-primary" style="padding:10px 18px;" data-i18n="ctaEnquiry">Place Enquiry</a>
+      </div>
+      <button class="burger" id="burgerBtn" aria-label="menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </nav>
+  </div>
+
+  <div class="ticker-bar">
+    <div class="ticker-track" id="tickerTrack"></div>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero" style="padding-top:64px;">
+    <div class="furrows"></div>
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow hero-eyebrow" data-i18n="heroEyebrow">NSE : AGROPHOS · ISO 9001:2008 CERTIFIED</div>
+        <h1 data-i18n="heroH1">Fertiliser for the field, <em>ledger for the market.</em></h1>
+        <p class="lede" data-i18n="heroLede">Agro Phos India Limited manufactures Single Super Phosphate, NPK, PROM and micronutrient fertilisers from our Dewas and Meghnagar plants in Madhya Pradesh — carried to farmers through 200+ dealers and five PSU tie-ups, and tracked openly as a listed company.</p>
+        <div class="hero-ctas">
+          <a href="#tradedesk" class="btn btn-primary" data-i18n="heroCta1">Start a Bulk Enquiry</a>
+          <a href="#stock" class="btn btn-outline" data-i18n="heroCta2" style="color:var(--parchment); border-color:var(--parchment);">View Stock Dashboard</a>
+        </div>
+        <div class="hero-badges">
+          <div class="hero-badge"><b>22+</b><span data-i18n="badge1">Years in Fertiliser</span></div>
+          <div class="hero-badge"><b>200+</b><span data-i18n="badge2">Dealer Network</span></div>
+          <div class="hero-badge"><b>5+</b><span data-i18n="badge3">PSU Tie-ups</span></div>
+          <div class="hero-badge"><b>2</b><span data-i18n="badge4">Manufacturing Units</span></div>
+        </div>
+      </div>
+
+      <div class="board">
+        <div class="board-head">
+          <div>
+            <div class="mono" style="font-size:12px; color:var(--ink-soft);">AGRO PHOS INDIA LTD</div>
+            <div class="status"><span class="dot-live" id="statusDot"></span><span id="marketStatus" data-i18n="marketOpen">Market Open</span></div>
+          </div>
+          <div style="text-align:right;">
+            <div class="mono" style="font-size:10.5px; color:var(--ink-soft);" id="clockLine">--:--:-- IST</div>
+          </div>
+        </div>
+        <div class="board-price" id="boardPrice">₹30.94</div>
+        <div class="board-change up" id="boardChange">▲ 0.35%</div>
+        <svg class="board-spark" id="boardSpark" viewBox="0 0 320 70" width="100%" height="70" preserveAspectRatio="none"></svg>
+        <div class="board-meta">
+          <div><span data-i18n="dayRangeLbl">Day Range</span> <b id="dayRange">30.50 – 31.68</b></div>
+          <div><span data-i18n="w52Lbl">52W Range</span> <b>23.90 – 51.46</b></div>
+          <div><span data-i18n="mcapLbl">Market Cap</span> <b>≈ ₹60.8 Cr</b></div>
+          <div><span data-i18n="peLbl">P/E · P/B</span> <b>8.6 · 0.9</b></div>
+        </div>
+        <div class="board-note" data-i18n="boardNote">Reference values from public market data (July 2026). This panel simulates intraday movement for demonstration — wire in a licensed NSE/BSE feed for real trading data. Not investment advice.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="wrap">
+      <div class="about-grid">
+        <div class="about-copy">
+          <div class="eyebrow" data-i18n="aboutEyebrow">About the company</div>
+          <h2 style="margin-top:14px; font-size:32px;" data-i18n="aboutH2">Twenty-two harvests of building soil health</h2>
+          <p data-i18n="aboutP1">Incorporated in 2002 and headquartered in Indore, Madhya Pradesh, Agro Phos India Limited runs manufacturing facilities in Dewas and Meghnagar producing Single Super Phosphate, NPK mixtures, Zinc Sulphate, phosphate-rich organic manure (PROM) and calcium-sulphate soil conditioner.</p>
+          <p data-i18n="aboutP2">Beyond its own product line, the company trades DAP, Urea and Ammonium Sulphate to round out what dealers and cooperatives need each season, backed by an in-house testing lab that checks every batch against grade.</p>
+          <div class="stamp" data-i18n="aboutStamp">✓ NSE Listed Company</div>
+          <div class="cin-line" data-i18n="aboutCin">CIN L24123MP2002PLC015285 · Registered Office: M-87, Trade Centre, 18 South Tukoganj, Indore (M.P.) 452001</div>
+        </div>
+        <div class="about-facts">
+          <div class="fact"><b>200+</b><span data-i18n="fact1">Satisfied Clients</span></div>
+          <div class="fact"><b>22+</b><span data-i18n="fact2">Years of Experience</span></div>
+          <div class="fact"><b>80+</b><span data-i18n="fact3">Employees</span></div>
+          <div class="fact"><b>5+</b><span data-i18n="fact4">PSU / Corporate Tie-ups</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="products" id="products">
+    <div class="wrap">
+      <div class="section-head on-dark">
+        <div class="eyebrow" style="color:var(--wheat-light);" data-i18n="prodEyebrow">Product catalogue</div>
+        <h2 data-i18n="prodH2">Six formulations, one purpose</h2>
+        <p data-i18n="prodP">Inorganic, organic and micronutrient lines sold under the Krishi Samriddhi and Ratna brands — built for the same field, at different stages of the season.</p>
+      </div>
+      <div class="prod-grid">
+        <div class="sack"><div class="num">01 / SSP</div><h3 data-i18n="p1h">Single Super Phosphate</h3><p data-i18n="p1p">Granulated phosphate fertiliser and the company's founding product, produced at scale in Dewas.</p><span class="tag" data-i18n="tagInorg">Inorganic</span></div>
+        <div class="sack"><div class="num">02 / NPK</div><h3 data-i18n="p2h">NPK 12-32-06</h3><p data-i18n="p2p">Balanced mixture fertiliser combining nitrogen, phosphorus and potassium for all-round crop nutrition.</p><span class="tag" data-i18n="tagInorg2">Inorganic</span></div>
+        <div class="sack"><div class="num">03 / PROM</div><h3 data-i18n="p3h">Krishi Samriddhi PROM</h3><p data-i18n="p3p">Phosphate-rich organic manure that rebuilds soil carbon alongside chemical fertiliser programmes.</p><span class="tag" data-i18n="tagOrg">Organic</span></div>
+        <div class="sack"><div class="num">04 / POTASH</div><h3 data-i18n="p4h">Potash (Molasses-derived)</h3><p data-i18n="p4p">K₂O 14.5% granulated potash, sourced from molasses for a lower-chloride potassium option.</p><span class="tag" data-i18n="tagOrg2">Organic</span></div>
+        <div class="sack"><div class="num">05 / ZnSO₄</div><h3 data-i18n="p5h">Zinc Sulphate – 21%</h3><p data-i18n="p5p">Corrects zinc deficiency, one of the most common micronutrient gaps in Indian cropland.</p><span class="tag" data-i18n="tagMicro">Micronutrient</span></div>
+        <div class="sack"><div class="num">06 / RATNA</div><h3 data-i18n="p6h">Soil Conditioner (Gypsum)</h3><p data-i18n="p6p">Calcium sulphate soil conditioner sold under the Ratna brand to reclaim sodic and compacted soils.</p><span class="tag" data-i18n="tagSoil">Soil Care</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="psu" id="psu">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow" data-i18n="psuEyebrow">Institutional supply</div>
+        <h2 data-i18n="psuH2">PSU &amp; corporate tie-ups</h2>
+        <p data-i18n="psuP">Agro Phos supplies Single Super Phosphate under contract to five public-sector and corporate partners across four states.</p>
+      </div>
+      <div class="psu-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th data-i18n="thNo">S.No.</th>
+              <th data-i18n="thPartner">Partner</th>
+              <th data-i18n="thState">State</th>
+              <th data-i18n="thProduct">Product</th>
+              <th data-i18n="thCap">Capacity (MT / annum)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Hindustan Urvarak &amp; Rasayan Ltd.</td><td data-i18n="stDelhi">Delhi</td><td data-i18n="prodSSP">Single Super Phosphate</td><td class="num">1,25,350</td></tr>
+            <tr><td>2</td><td>Brahmaputra Valley Fertilizer Corp. Ltd.</td><td data-i18n="stChh1">Chhattisgarh</td><td data-i18n="prodSSP2">Single Super Phosphate</td><td class="num">6,000</td></tr>
+            <tr><td>3</td><td>Matix Fertilisers &amp; Chemicals Ltd.</td><td data-i18n="stWB">West Bengal</td><td data-i18n="prodSSP3">Single Super Phosphate</td><td class="num">60,000</td></tr>
+            <tr><td>4</td><td>Maharashtra Agro Industries Dev. Corp.</td><td data-i18n="stMum">Mumbai</td><td data-i18n="prodSSP4">Single Super Phosphate</td><td class="num">25,000</td></tr>
+            <tr><td>5</td><td>Markfed</td><td data-i18n="stChh2">Chhattisgarh</td><td data-i18n="prodSSP5">Single Super Phosphate</td><td class="num">5,000</td></tr>
+            <tr><td>6</td><td>Markfed</td><td data-i18n="stMP">Madhya Pradesh</td><td data-i18n="prodSSP6">Single Super Phosphate</td><td class="num">20,000</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="stockdash" id="stock">
+    <div class="wrap">
+      <div class="section-head on-dark">
+        <div class="eyebrow" style="color:var(--wheat-light);" data-i18n="invEyebrow">Investor desk</div>
+        <h2 data-i18n="invH2">Live-style stock dashboard</h2>
+        <p data-i18n="invP">AGROPHOS on NSE — simulated tick-by-tick for this preview, anchored to the last known public quote.</p>
+      </div>
+      <div class="dash-grid">
+        <div class="dash-main">
+          <div class="dash-top">
+            <div>
+              <div class="mono" style="font-size:13px; color:#c9bd9c;">AGRO PHOS INDIA LTD · NSE: AGROPHOS</div>
+              <div class="dash-price" id="dashPrice">₹30.94</div>
+              <div class="dash-change" id="dashChange">▲ ₹0.35 (1.15%) <span data-i18n="todayWord">today</span></div>
+            </div>
+            <div class="dash-status"><span class="dot-live"></span><span id="dashStatus" data-i18n="dashOpenStatus">Market Open · updates every 3s</span></div>
+          </div>
+          <svg class="dash-chart" id="dashChart" viewBox="0 0 640 200" preserveAspectRatio="none"></svg>
+          <div class="dash-foot">
+            <span id="dashTime" data-i18n="lastTick">Last tick —</span>
+            <span data-i18n="simFeed">Simulated feed for preview purposes</span>
+          </div>
+        </div>
+        <div class="dash-stats">
+          <div class="stat-card"><span data-i18n="statMcap">Market Cap</span><b>≈ ₹60.8 Cr</b></div>
+          <div class="stat-card"><span data-i18n="statPe">P/E Ratio</span><b>8.6×</b></div>
+          <div class="stat-card"><span data-i18n="statPb">P/B Ratio</span><b>0.9×</b></div>
+          <div class="stat-card"><span data-i18n="statHigh">52W High</span><b>₹51.46</b></div>
+          <div class="stat-card"><span data-i18n="statLow">52W Low</span><b>₹23.90</b></div>
+          <div class="stat-card"><span data-i18n="statProm">Promoter Holding</span><b>54.3%</b></div>
+          <div class="dash-disclaimer" data-i18n="dashDisclaimer">
+            Figures are reference values from public market-data sources as of July 2026 and are simulated for this demo — a production build should call a licensed market-data API (NSE India, BSE, or a data vendor) on a server-side proxy with an API key, since browser-based scraping of exchange sites is blocked and unreliable. Nothing here is investment advice.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tradedesk" id="tradedesk">
+    <div class="wrap">
+      <div class="td-grid">
+        <div class="td-info">
+          <div class="eyebrow" data-i18n="tdEyebrow">B2B procurement</div>
+          <h3 style="margin-top:14px;" data-i18n="tdH3">Trade Desk — bulk orders &amp; enquiries</h3>
+          <p data-i18n="tdP">For distributors, dealers, cooperatives and PSU procurement teams sourcing SSP, NPK, PROM or micronutrients in bulk. Fill the slip below and our sales desk will revert with a quotation and delivery schedule.</p>
+          <ul class="td-steps">
+            <li><span class="n">01</span><div><strong data-i18n="step1t">Submit the enquiry</strong><span data-i18n="step1d">Tell us the product, quantity and delivery state.</span></div></li>
+            <li><span class="n">02</span><div><strong data-i18n="step2t">Get a quotation</strong><span data-i18n="step2d">Our trade desk shares pricing and lead time within 2 working days.</span></div></li>
+            <li><span class="n">03</span><div><strong data-i18n="step3t">Confirm &amp; dispatch</strong><span data-i18n="step3d">Orders are scheduled from Dewas or Meghnagar against confirmed PO.</span></div></li>
+          </ul>
+        </div>
+
+        <form class="slip" id="enquiryForm">
+          <div class="form-row">
+            <div><label for="company" data-i18n="lblCompany">Company / Firm name</label><input id="company" required data-i18n-ph="phCompany" placeholder="e.g. Shree Krishi Traders"></div>
+            <div><label for="person" data-i18n="lblPerson">Contact person</label><input id="person" required data-i18n-ph="phPerson" placeholder="Full name"></div>
+          </div>
+          <div class="form-row">
+            <div><label for="email" data-i18n="lblEmail">Email</label><input id="email" type="email" required data-i18n-ph="phEmail" placeholder="you@company.com"></div>
+            <div><label for="phone" data-i18n="lblPhone">Phone</label><input id="phone" type="tel" required data-i18n-ph="phPhone" placeholder="+91"></div>
+          </div>
+          <div class="form-row">
+            <div>
+              <label for="product" data-i18n="lblProduct">Product required</label>
+              <select id="product">
+                <option data-i18n="optP1">Single Super Phosphate (SSP)</option>
+                <option data-i18n="optP2">NPK 12-32-06</option>
+                <option data-i18n="optP3">PROM – Organic Manure</option>
+                <option data-i18n="optP4">Potash (Molasses-derived)</option>
+                <option data-i18n="optP5">Zinc Sulphate – 21%</option>
+                <option data-i18n="optP6">Soil Conditioner (Gypsum)</option>
+              </select>
+            </div>
+            <div><label for="qty" data-i18n="lblQty">Quantity (Metric Tonnes)</label><input id="qty" type="number" min="1" required data-i18n-ph="phQty" placeholder="e.g. 500"></div>
+          </div>
+          <div class="form-row">
+            <div><label for="state" data-i18n="lblState">Delivery state</label><input id="state" required data-i18n-ph="phState" placeholder="e.g. Madhya Pradesh"></div>
+            <div><label for="buyer" data-i18n="lblBuyer">Buyer type</label>
+              <select id="buyer">
+                <option data-i18n="optB1">Dealer / Distributor</option>
+                <option data-i18n="optB2">Cooperative Society</option>
+                <option data-i18n="optB3">PSU / Government</option>
+                <option data-i18n="optB4">Corporate Bulk Buyer</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row full">
+            <div><label for="msg" data-i18n="lblMsg">Message (optional)</label><textarea id="msg" data-i18n-ph="phMsg" placeholder="Delivery timeline, packaging preference, or anything else we should know."></textarea></div>
+          </div>
+          <button type="submit" class="btn slip-submit" id="submitBtn" data-i18n="btnSubmit">Submit Enquiry</button>
+          <div class="toast" id="toastMsg" data-i18n="toastText">✓ Enquiry recorded. This is a UI preview — connect a form backend (e.g. email API or CRM webhook) to receive live submissions.</div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="voices">
+    <div class="wrap">
+      <div class="section-head on-dark">
+        <div class="eyebrow" style="color:var(--wheat-light);" data-i18n="voiceEyebrow">From the field</div>
+        <h2 data-i18n="voiceH2">What dealers and farmers say</h2>
+      </div>
+      <div class="voice-grid">
+        <div class="voice-card">
+          <p>"Zinc Sulphate se mitti ki quality mein farak saaf dikh raha hai — results consistent rahe is season mein."</p>
+          <div class="voice-who"><div class="voice-avatar">A</div><div><b>Amit Kumar</b><span>Ujjain, MP</span></div></div>
+        </div>
+        <div class="voice-card">
+          <p>"PROM organic manure ne soil fertility improve ki, aur crop health bhi better hui compared to pichle saal."</p>
+          <div class="voice-who"><div class="voice-avatar">N</div><div><b>Neha Patel</b><span>Jabalpur, MP</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h4>Agro Phos India Limited</h4>
+        <p data-i18n="footAbout">ISO 9001:2008 certified fertiliser manufacturer, NSE listed, serving farmers and institutions from Madhya Pradesh since 2002.</p>
+      </div>
+      <div>
+        <h4 data-i18n="footCoH">Company</h4>
+        <ul class="foot-links">
+          <li><a href="#about" data-i18n="footAboutLink">About Us</a></li>
+          <li><a href="#products" data-i18n="footProdLink">Products</a></li>
+          <li><a href="#stock" data-i18n="footInvLink">Investor Desk</a></li>
+          <li><a href="#tradedesk" data-i18n="footTradeLink">Trade Desk</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footProdH">Products</h4>
+        <ul class="foot-links">
+          <li>SSP</li><li>NPK</li><li>PROM</li><li data-i18n="footPotash">Potash</li><li data-i18n="footZinc">Zinc Sulphate</li><li data-i18n="footSoil">Soil Conditioner</li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footContactH">Contact</h4>
+        <p data-i18n="footAddr">M-87, Trade Centre, 18 South Tukoganj,<br>Indore (M.P.) 452001</p>
+        <p style="margin-top:10px;">0731-2529488 / 89 / 90<br>info@agrophos.com · cs@agrophos.com</p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span data-i18n="footCopy">©️ 2026 Agro Phos India Limited · CIN L24123MP2002PLC015285</span>
+      <span data-i18n="footNote">UI concept redesign — not the official company website</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const dict = {
+    en: {
+      topCin:'CIN: L24123MP2002PLC015285',
+      brandTag:'INDIA LIMITED · EST. 2002',
+      navAbout:'About', navProducts:'Products', navStock:'Stock', navTrade:'Trade Desk', navContact:'Contact',
+      ctaLivePrice:'Live Price', ctaEnquiry:'Place Enquiry',
+      heroEyebrow:'NSE : AGROPHOS · ISO 9001:2008 CERTIFIED',
+      heroH1:'Fertiliser for the field, <em>ledger for the market.</em>',
+      heroLede:'Agro Phos India Limited manufactures Single Super Phosphate, NPK, PROM and micronutrient fertilisers from our Dewas and Meghnagar plants in Madhya Pradesh — carried to farmers through 200+ dealers and five PSU tie-ups, and tracked openly as a listed company.',
+      heroCta1:'Start a Bulk Enquiry', heroCta2:'View Stock Dashboard',
+      badge1:'Years in Fertiliser', badge2:'Dealer Network', badge3:'PSU Tie-ups', badge4:'Manufacturing Units',
+      marketOpen:'Market Open', marketClosed:'Market Closed',
+      dayRangeLbl:'Day Range', w52Lbl:'52W Range', mcapLbl:'Market Cap', peLbl:'P/E · P/B',
+      boardNote:'Reference values from public market data (July 2026). This panel simulates intraday movement for demonstration — wire in a licensed NSE/BSE feed for real trading data. Not investment advice.',
+      aboutEyebrow:'About the company',
+      aboutH2:'Twenty-two harvests of building soil health',
+      aboutP1:"Incorporated in 2002 and headquartered in Indore, Madhya Pradesh, Agro Phos India Limited runs manufacturing facilities in Dewas and Meghnagar producing Single Super Phosphate, NPK mixtures, Zinc Sulphate, phosphate-rich organic manure (PROM) and calcium-sulphate soil conditioner.",
+      aboutP2:"Beyond its own product line, the company trades DAP, Urea and Ammonium Sulphate to round out what dealers and cooperatives need each season, backed by an in-house testing lab that checks every batch against grade.",
+      aboutStamp:'✓ NSE Listed Company',
+      aboutCin:'CIN L24123MP2002PLC015285 · Registered Office: M-87, Trade Centre, 18 South Tukoganj, Indore (M.P.) 452001',
+      fact1:'Satisfied Clients', fact2:'Years of Experience', fact3:'Employees', fact4:'PSU / Corporate Tie-ups',
+      prodEyebrow:'Product catalogue', prodH2:'Six formulations, one purpose',
+      prodP:'Inorganic, organic and micronutrient lines sold under the Krishi Samriddhi and Ratna brands — built for the same field, at different stages of the season.',
+      p1h:'Single Super Phosphate', p1p:"Granulated phosphate fertiliser and the company's founding product, produced at scale in Dewas.",
+      p2h:'NPK 12-32-06', p2p:'Balanced mixture fertiliser combining nitrogen, phosphorus and potassium for all-round crop nutrition.',
+      p3h:'Krishi Samriddhi PROM', p3p:'Phosphate-rich organic manure that rebuilds soil carbon alongside chemical fertiliser programmes.',
+      p4h:'Potash (Molasses-derived)', p4p:'K₂O 14.5% granulated potash, sourced from molasses for a lower-chloride potassium option.',
+      p5h:'Zinc Sulphate – 21%', p5p:'Corrects zinc deficiency, one of the most common micronutrient gaps in Indian cropland.',
+      p6h:'Soil Conditioner (Gypsum)', p6p:'Calcium sulphate soil conditioner sold under the Ratna brand to reclaim sodic and compacted soils.',
+      tagInorg:'Inorganic', tagInorg2:'Inorganic', tagOrg:'Organic', tagOrg2:'Organic', tagMicro:'Micronutrient', tagSoil:'Soil Care',
+      psuEyebrow:'Institutional supply', psuH2:'PSU & corporate tie-ups',
+      psuP:'Agro Phos supplies Single Super Phosphate under contract to five public-sector and corporate partners across four states.',
+      thNo:'S.No.', thPartner:'Partner', thState:'State', thProduct:'Product', thCap:'Capacity (MT / annum)',
+      stDelhi:'Delhi', stChh1:'Chhattisgarh', stWB:'West Bengal', stMum:'Mumbai', stChh2:'Chhattisgarh', stMP:'Madhya Pradesh',
+      prodSSP:'Single Super Phosphate', prodSSP2:'Single Super Phosphate', prodSSP3:'Single Super Phosphate', prodSSP4:'Single Super Phosphate', prodSSP5:'Single Super Phosphate', prodSSP6:'Single Super Phosphate',
+      invEyebrow:'Investor desk', invH2:'Live-style stock dashboard',
+      invP:'AGROPHOS on NSE — simulated tick-by-tick for this preview, anchored to the last known public quote.',
+      todayWord:'today', dashOpenStatus:'Market Open · updates every 3s', dashClosedStatus:'Market Closed · showing last simulated tick',
+      lastTick:'Last tick —', simFeed:'Simulated feed for preview purposes',
+      statMcap:'Market Cap', statPe:'P/E Ratio', statPb:'P/B Ratio', statHigh:'52W High', statLow:'52W Low', statProm:'Promoter Holding',
+      dashDisclaimer:'Figures are reference values from public market-data sources as of July 2026 and are simulated for this demo — a production build should call a licensed market-data API (NSE India, BSE, or a data vendor) on a server-side proxy with an API key, since browser-based scraping of exchange sites is blocked and unreliable. Nothing here is investment advice.',
+      tdEyebrow:'B2B procurement', tdH3:'Trade Desk — bulk orders & enquiries',
+      tdP:'For distributors, dealers, cooperatives and PSU procurement teams sourcing SSP, NPK, PROM or micronutrients in bulk. Fill the slip below and our sales desk will revert with a quotation and delivery schedule.',
+      step1t:'Submit the enquiry', step1d:'Tell us the product, quantity and delivery state.',
+      step2t:'Get a quotation', step2d:'Our trade desk shares pricing and lead time within 2 working days.',
+      step3t:'Confirm & dispatch', step3d:'Orders are scheduled from Dewas or Meghnagar against confirmed PO.',
+      lblCompany:'Company / Firm name', phCompany:'e.g. Shree Krishi Traders',
+      lblPerson:'Contact person', phPerson:'Full name',
+      lblEmail:'Email', phEmail:'you@company.com',
+      lblPhone:'Phone', phPhone:'+91',
+      lblProduct:'Product required',
+      optP1:'Single Super Phosphate (SSP)', optP2:'NPK 12-32-06', optP3:'PROM – Organic Manure', optP4:'Potash (Molasses-derived)', optP5:'Zinc Sulphate – 21%', optP6:'Soil Conditioner (Gypsum)',
+      lblQty:'Quantity (Metric Tonnes)', phQty:'e.g. 500',
+      lblState:'Delivery state', phState:'e.g. Madhya Pradesh',
+      lblBuyer:'Buyer type',
+      optB1:'Dealer / Distributor', optB2:'Cooperative Society', optB3:'PSU / Government', optB4:'Corporate Bulk Buyer',
+      lblMsg:'Message (optional)', phMsg:'Delivery timeline, packaging preference, or anything else we should know.',
+      btnSubmit:'Submit Enquiry', btnSubmitted:'Submitted ✓',
+      toastText:'✓ Enquiry recorded. This is a UI preview — connect a form backend (e.g. email API or CRM webhook) to receive live submissions.',
+      voiceEyebrow:'From the field', voiceH2:'What dealers and farmers say',
+      footAbout:'ISO 9001:2008 certified fertiliser manufacturer, NSE listed, serving farmers and institutions from Madhya Pradesh since 2002.',
+      footCoH:'Company', footAboutLink:'About Us', footProdLink:'Products', footInvLink:'Investor Desk', footTradeLink:'Trade Desk',
+      footProdH:'Products', footPotash:'Potash', footZinc:'Zinc Sulphate', footSoil:'Soil Conditioner',
+      footContactH:'Contact', footAddr:'M-87, Trade Centre, 18 South Tukoganj,<br>Indore (M.P.) 452001',
+      footCopy:'©️ 2026 Agro Phos India Limited · CIN L24123MP2002PLC015285',
+      footNote:'UI concept redesign — not the official company website'
+    },
+    hi: {
+      topCin:'सीआईएन: L24123MP2002PLC015285',
+      brandTag:'इंडिया लिमिटेड · स्था. 2002',
+      navAbout:'परिचय', navProducts:'उत्पाद', navStock:'शेयर', navTrade:'व्यापार डेस्क', navContact:'संपर्क',
+      ctaLivePrice:'लाइव भाव', ctaEnquiry:'पूछताछ करें',
+      heroEyebrow:'एनएसई : AGROPHOS · आईएसओ 9001:2008 प्रमाणित',
+      heroH1:'खेत के लिए खाद, <em>बाज़ार के लिए बहीखाता।</em>',
+      heroLede:'एग्रो फॉस इंडिया लिमिटेड मध्य प्रदेश के देवास और मेघनगर संयंत्रों में सिंगल सुपर फॉस्फेट, एनपीके, प्रोम और सूक्ष्म पोषक उर्वरक बनाती है — जो 200+ डीलरों और पाँच पीएसयू सहयोगों के ज़रिए किसानों तक पहुँचते हैं, और एक सूचीबद्ध कंपनी के तौर पर पूरी पारदर्शिता के साथ ट्रैक किए जाते हैं।',
+      heroCta1:'थोक पूछताछ शुरू करें', heroCta2:'शेयर डैशबोर्ड देखें',
+      badge1:'वर्षों का अनुभव', badge2:'डीलर नेटवर्क', badge3:'पीएसयू सहयोग', badge4:'उत्पादन इकाइयाँ',
+      marketOpen:'बाज़ार खुला', marketClosed:'बाज़ार बंद',
+      dayRangeLbl:'दिन की रेंज', w52Lbl:'52 सप्ताह रेंज', mcapLbl:'मार्केट कैप', peLbl:'पी/ई · पी/बी',
+      boardNote:'सार्वजनिक बाज़ार डेटा (जुलाई 2026) पर आधारित संदर्भ मूल्य। यह पैनल प्रदर्शन हेतु इंट्राडे मूवमेंट को सिम्युलेट करता है — वास्तविक ट्रेडिंग डेटा के लिए लाइसेंस-प्राप्त एनएसई/बीएसई फीड जोड़ें। यह निवेश सलाह नहीं है।',
+      aboutEyebrow:'कंपनी के बारे में',
+      aboutH2:'मिट्टी की सेहत सुधारते बाईस वर्ष',
+      aboutP1:'2002 में स्थापित और इंदौर, मध्य प्रदेश में मुख्यालय वाली एग्रो फॉस इंडिया लिमिटेड, देवास और मेघनगर की अपनी इकाइयों में सिंगल सुपर फॉस्फेट, एनपीके मिश्रण, ज़िंक सल्फेट, फॉस्फेट-समृद्ध जैविक खाद (प्रोम) और कैल्शियम-सल्फेट मृदा सुधारक का उत्पादन करती है।',
+      aboutP2:'अपनी उत्पाद श्रृंखला के अलावा, कंपनी डीएपी, यूरिया और अमोनियम सल्फेट का व्यापार भी करती है ताकि हर सीज़न में डीलरों और सहकारी समितियों की ज़रूरत पूरी हो सके — यह सब एक इन-हाउस टेस्टिंग लैब की निगरानी में होता है जो हर बैच की गुणवत्ता जाँचती है।',
+      aboutStamp:'✓ एनएसई सूचीबद्ध कंपनी',
+      aboutCin:'सीआईएन L24123MP2002PLC015285 · पंजीकृत कार्यालय: एम-87, ट्रेड सेंटर, 18 साउथ तुकोगंज, इंदौर (म.प्र.) 452001',
+      fact1:'संतुष्ट ग्राहक', fact2:'वर्षों का अनुभव', fact3:'कर्मचारी', fact4:'पीएसयू / कॉर्पोरेट सहयोग',
+      prodEyebrow:'उत्पाद सूची', prodH2:'छह उत्पाद, एक लक्ष्य — स्वस्थ फसल',
+      prodP:'कृषि समृद्धि और रत्न ब्रांड के तहत बिकने वाली अकार्बनिक, जैविक और सूक्ष्म पोषक श्रेणियाँ — मौसम के हर चरण के लिए एक ही खेत हेतु बनाई गईं।',
+      p1h:'सिंगल सुपर फॉस्फेट (SSP)', p1p:'दानेदार फॉस्फेट उर्वरक और कंपनी का मूल उत्पाद, देवास में बड़े पैमाने पर तैयार किया जाता है।',
+      p2h:'एनपीके 12-32-06', p2p:'नाइट्रोजन, फॉस्फोरस और पोटैशियम का संतुलित मिश्रण उर्वरक — पूर्ण फसल पोषण के लिए।',
+      p3h:'कृषि समृद्धि प्रोम', p3p:'फॉस्फेट-समृद्ध जैविक खाद जो रासायनिक उर्वरक कार्यक्रम के साथ मिट्टी का कार्बन स्तर सुधारती है।',
+      p4h:'पोटाश (मोलासिस से निर्मित)', p4p:'K₂O 14.5% दानेदार पोटाश, मोलासिस से तैयार — कम क्लोराइड वाला पोटैशियम विकल्प।',
+      p5h:'ज़िंक सल्फेट – 21%', p5p:'भारतीय खेतों में सबसे आम सूक्ष्म पोषक कमी — जिंक की कमी — को दूर करता है।',
+      p6h:'मृदा सुधारक (जिप्सम)', p6p:'रत्न ब्रांड के तहत बिकने वाला कैल्शियम सल्फेट मृदा सुधारक — क्षारीय व सख्त मिट्टी सुधारने हेतु।',
+      tagInorg:'अकार्बनिक', tagInorg2:'अकार्बनिक', tagOrg:'जैविक', tagOrg2:'जैविक', tagMicro:'सूक्ष्म पोषक', tagSoil:'मृदा देखभाल',
+      psuEyebrow:'संस्थागत आपूर्ति', psuH2:'पीएसयू और कॉर्पोरेट सहयोग',
+      psuP:'एग्रो फॉस चार राज्यों में पाँच सार्वजनिक-क्षेत्र और कॉर्पोरेट साझेदारों को अनुबंध के तहत सिंगल सुपर फॉस्फेट की आपूर्ति करता है।',
+      thNo:'क्र.सं.', thPartner:'साझेदार', thState:'राज्य', thProduct:'उत्पाद', thCap:'क्षमता (मीट्रिक टन / वर्ष)',
+      stDelhi:'दिल्ली', stChh1:'छत्तीसगढ़', stWB:'पश्चिम बंगाल', stMum:'मुंबई', stChh2:'छत्तीसगढ़', stMP:'मध्य प्रदेश',
+      prodSSP:'सिंगल सुपर फॉस्फेट', prodSSP2:'सिंगल सुपर फॉस्फेट', prodSSP3:'सिंगल सुपर फॉस्फेट', prodSSP4:'सिंगल सुपर फॉस्फेट', prodSSP5:'सिंगल सुपर फॉस्फेट', prodSSP6:'सिंगल सुपर फॉस्फेट',
+      invEyebrow:'निवेशक डेस्क', invH2:'लाइव-शैली शेयर डैशबोर्ड',
+      invP:'एनएसई पर AGROPHOS — इस पूर्वावलोकन हेतु सिम्युलेटेड टिक-बाय-टिक, अंतिम ज्ञात सार्वजनिक भाव पर आधारित।',
+      todayWord:'आज', dashOpenStatus:'बाज़ार खुला · हर 3 सेकंड में अपडेट', dashClosedStatus:'बाज़ार बंद · अंतिम सिम्युलेटेड भाव दिखाया जा रहा है',
+      lastTick:'अंतिम टिक —', simFeed:'पूर्वावलोकन हेतु सिम्युलेटेड फीड',
+      statMcap:'मार्केट कैप', statPe:'पी/ई अनुपात', statPb:'पी/बी अनुपात', statHigh:'52 सप्ताह उच्च', statLow:'52 सप्ताह निम्न', statProm:'प्रमोटर हिस्सेदारी',
+      dashDisclaimer:'ये आँकड़े जुलाई 2026 तक के सार्वजनिक बाज़ार-डेटा स्रोतों के संदर्भ मूल्य हैं और इस डेमो हेतु सिम्युलेटेड हैं — प्रोडक्शन बिल्ड में सर्वर-साइड प्रॉक्सी और एपीआई-की के साथ लाइसेंस-प्राप्त मार्केट-डेटा एपीआई (एनएसई इंडिया, बीएसई, या डेटा वेंडर) कॉल करनी चाहिए, क्योंकि ब्राउज़र से एक्सचेंज साइट स्क्रैप करना अवरुद्ध और अविश्वसनीय है। यह निवेश सलाह नहीं है।',
+      tdEyebrow:'बी2बी खरीद', tdH3:'व्यापार डेस्क — थोक ऑर्डर और पूछताछ',
+      tdP:'बल्क में SSP, NPK, प्रोम या सूक्ष्म पोषक खरीदने वाले वितरकों, डीलरों, सहकारी समितियों और पीएसयू खरीद टीमों के लिए। नीचे स्लिप भरें, हमारी सेल्स डेस्क कोटेशन और डिलीवरी शेड्यूल के साथ जवाब देगी।',
+      step1t:'पूछताछ भेजें', step1d:'उत्पाद, मात्रा और डिलीवरी राज्य बताएँ।',
+      step2t:'कोटेशन पाएँ', step2d:'हमारी व्यापार डेस्क 2 कार्य-दिवसों में मूल्य और समय-सीमा साझा करती है।',
+      step3t:'पुष्टि और डिस्पैच', step3d:'पुष्ट पीओ के अनुसार देवास या मेघनगर से ऑर्डर शेड्यूल किए जाते हैं।',
+      lblCompany:'कंपनी / फर्म का नाम', phCompany:'जैसे: श्री कृषि ट्रेडर्स',
+      lblPerson:'संपर्क व्यक्ति', phPerson:'पूरा नाम',
+      lblEmail:'ईमेल', phEmail:'you@company.com',
+      lblPhone:'फ़ोन', phPhone:'+91',
+      lblProduct:'आवश्यक उत्पाद',
+      optP1:'सिंगल सुपर फॉस्फेट (SSP)', optP2:'एनपीके 12-32-06', optP3:'प्रोम – जैविक खाद', optP4:'पोटाश (मोलासिस से निर्मित)', optP5:'ज़िंक सल्फेट – 21%', optP6:'मृदा सुधारक (जिप्सम)',
+      lblQty:'मात्रा (मीट्रिक टन)', phQty:'जैसे: 500',
+      lblState:'डिलीवरी राज्य', phState:'जैसे: मध्य प्रदेश',
+      lblBuyer:'खरीदार प्रकार',
+      optB1:'डीलर / वितरक', optB2:'सहकारी समिति', optB3:'पीएसयू / सरकारी', optB4:'कॉर्पोरेट थोक खरीदार',
+      lblMsg:'संदेश (वैकल्पिक)', phMsg:'डिलीवरी समय-सीमा, पैकेजिंग वरीयता, या कोई और जानकारी जो हमें जाननी चाहिए।',
+      btnSubmit:'पूछताछ भेजें', btnSubmitted:'भेज दिया गया ✓',
+      toastText:'✓ पूछताछ दर्ज हो गई। यह एक यूआई पूर्वावलोकन है — लाइव सबमिशन प्राप्त करने के लिए फॉर्म बैकएंड (जैसे ईमेल एपीआई या सीआरएम वेबहुक) जोड़ें।',
+      voiceEyebrow:'खेतों की आवाज़', voiceH2:'डीलर और किसान क्या कहते हैं',
+      footAbout:'आईएसओ 9001:2008 प्रमाणित उर्वरक निर्माता, एनएसई सूचीबद्ध, 2002 से मध्य प्रदेश से किसानों और संस्थाओं की सेवा में।',
+      footCoH:'कंपनी', footAboutLink:'हमारे बारे में', footProdLink:'उत्पाद', footInvLink:'निवेशक डेस्क', footTradeLink:'व्यापार डेस्क',
+      footProdH:'उत्पाद', footPotash:'पोटाश', footZinc:'ज़िंक सल्फेट', footSoil:'मृदा सुधारक',
+      footContactH:'संपर्क करें', footAddr:'एम-87, ट्रेड सेंटर, 18 साउथ तुकोगंज,<br>इंदौर (म.प्र.) 452001',
+      footCopy:'©️ 2026 एग्रो फॉस इंडिया लिमिटेड · सीआईएन L24123MP2002PLC015285',
+      footNote:'यूआई कॉन्सेप्ट रीडिज़ाइन — यह आधिकारिक कंपनी वेबसाइट नहीं है'
+    }
+  };
+
+  let currentLang = 'en';
+
+  function applyLang(lang){
+    currentLang = lang;
+    document.getElementById('htmlRoot').setAttribute('lang', lang === 'hi' ? 'hi' : 'en');
+    document.body.classList.toggle('lang-hi', lang === 'hi');
+
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const key = el.getAttribute('data-i18n');
+      const val = dict[lang] && dict[lang][key];
+      if(val !== undefined) el.innerHTML = val;
+    });
+    document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
+      const key = el.getAttribute('data-i18n-ph');
+      const val = dict[lang] && dict[lang][key];
+      if(val !== undefined) el.setAttribute('placeholder', val);
+    });
+
+    document.getElementById('btnEn').classList.toggle('active', lang==='en');
+    document.getElementById('btnHi').classList.toggle('active', lang==='hi');
+
+    buildTicker();
+    refreshMarketStatusText();
+    if(submitLocked){
+      document.getElementById('submitBtn').textContent = dict[lang].btnSubmitted;
+    }
+  }
+
+  document.getElementById('btnEn').addEventListener('click', ()=>applyLang('en'));
+  document.getElementById('btnHi').addEventListener('click', ()=>applyLang('hi'));
+
+  function buildTicker(){
+    const track = document.getElementById('tickerTrack');
+    const items = currentLang === 'hi' ? [
+      'AGROPHOS <b>₹30.94</b> ▲1.15%',
+      'SSP क्षमता <b>2,41,350 मीट्रिक टन/वर्ष</b> — सभी पीएसयू तालमेल',
+      'एनपीके 12-32-06 · कृषि समृद्धि',
+      '52 सप्ताह रेंज <b>₹23.90 – ₹51.46</b>',
+      'प्रोम जैविक खाद · अभी बुकिंग जारी',
+      'मार्केट कैप <b>≈ ₹60.8 करोड़</b>',
+      '200+ डीलर · 5 पीएसयू सहयोग',
+      'ज़िंक सल्फेट 21% · स्टॉक में उपलब्ध'
+    ] : [
+      'AGROPHOS <b>₹30.94</b> ▲1.15%',
+      'SSP CAPACITY <b>2,41,350 MT/YR</b> across PSU tie-ups',
+      'NPK 12-32-06 · KRISHI SAMRIDDHI',
+      '52W RANGE <b>₹23.90 – ₹51.46</b>',
+      'PROM ORGANIC MANURE · NOW BOOKING',
+      'MARKET CAP <b>≈ ₹60.8 CR</b>',
+      '200+ DEALERS · 5 PSU TIE-UPS',
+      'ZINC SULPHATE 21% · IN STOCK'
+    ];
+    const full = items.concat(items);
+    track.innerHTML = full.map(t => `<span class="ticker-item"><span class="dot-live"></span>${t}</span>`).join('');
+  }
+
+  let marketOpenFlag = true;
+  function istNow(){
+    const now = new Date();
+    const utc = now.getTime() + now.getTimezoneOffset()*60000;
+    return new Date(utc + 5.5*3600000);
+  }
+  function refreshMarketStatusText(){
+    const t = dict[currentLang];
+    document.getElementById('marketStatus').textContent = marketOpenFlag ? t.marketOpen : t.marketClosed;
+    document.getElementById('dashStatus').textContent = marketOpenFlag ? t.dashOpenStatus : t.dashClosedStatus;
+  }
+  function updateClock(){
+    const ist = istNow();
+    const hh = String(ist.getHours()).padStart(2,'0');
+    const mm = String(ist.getMinutes()).padStart(2,'0');
+    const ss = String(ist.getSeconds()).padStart(2,'0');
+    document.getElementById('clockLine').textContent = `${hh}:${mm}:${ss} IST`;
+
+    const day = ist.getDay();
+    const mins = ist.getHours()*60 + ist.getMinutes();
+    marketOpenFlag = day>=1 && day<=5 && mins>=555 && mins<=930;
+    refreshMarketStatusText();
+    document.getElementById('statusDot').style.background = marketOpenFlag ? '#7be07b' : '#c98a5a';
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  const REF_OPEN = 30.59;
+  const LOW52 = 23.90, HIGH52 = 51.46;
+  let price = 30.94;
+  let dayHigh = 31.68, dayLow = 30.50;
+  const history = [];
+  for(let i=0;i<40;i++){ history.push(30.6 + Math.sin(i/4)*0.4 + (Math.random()-0.5)*0.3); }
+  history.push(price);
+
+  function fmt(n){ return '₹' + n.toFixed(2); }
+
+  function renderSpark(svg, data, w, h){
+    const min = Math.min(...data), max = Math.max(...data);
+    const range = (max-min) || 1;
+    const step = w/(data.length-1);
+    let d = '';
+    data.forEach((v,i)=>{
+      const x = i*step;
+      const y = h - ((v-min)/range)*h*0.86 - h*0.07;
+      d += (i===0?'M':'L') + x.toFixed(1) + ' ' + y.toFixed(1) + ' ';
+    });
+    const up = data[data.length-1] >= data[0];
+    const color = up ? '#3f7d3a' : '#a5402a';
+    svg.innerHTML = `
+      <path d="${d}" fill="none" stroke="${color}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="${w}" cy="${(h - ((data[data.length-1]-min)/range)*h*0.86 - h*0.07).toFixed(1)}" r="4" fill="${color}"/>
+    `;
+  }
+
+  const boardSpark = document.getElementById('boardSpark');
+  const dashChart = document.getElementById('dashChart');
+
+  function tick(){
+    const drift = (Math.random()-0.5) * 0.28;
+    price = Math.min(HIGH52, Math.max(LOW52, price + drift));
+    price = Math.round(price*100)/100;
+    dayHigh = Math.max(dayHigh, price);
+    dayLow = Math.min(dayLow, price);
+    history.push(price);
+    if(history.length > 60) history.shift();
+
+    const change = price - REF_OPEN;
+    const pct = (change/REF_OPEN*100);
+    const up = change >= 0;
+
+    document.getElementById('boardPrice').textContent = fmt(price);
+    const bc = document.getElementById('boardChange');
+    bc.textContent = (up?'▲ ':'▼ ') + Math.abs(pct).toFixed(2) + '%';
+    bc.className = 'board-change ' + (up?'up':'down');
+
+    document.getElementById('dayRange').textContent = dayLow.toFixed(2) + ' – ' + dayHigh.toFixed(2);
+
+    document.getElementById('dashPrice').textContent = fmt(price);
+    const dc = document.getElementById('dashChange');
+    const todayWord = dict[currentLang].todayWord;
+    dc.innerHTML = (up?'▲ ':'▼ ') + '₹' + Math.abs(change).toFixed(2) + ' (' + Math.abs(pct).toFixed(2) + '%) <span>' + todayWord + '</span>';
+    dc.style.color = up ? '#7be07b' : '#e8a487';
+
+    const ist = istNow();
+    document.getElementById('dashTime').textContent = (currentLang==='hi' ? 'अंतिम टिक ' : 'Last tick ') + ist.toLocaleTimeString('en-IN',{hour12:false});
+
+    renderSpark(boardSpark, history.slice(-24), 320, 70);
+    renderSpark(dashChart, history, 640, 200);
+  }
+  tick();
+  setInterval(tick, 3000);
+
+  let submitLocked = false;
+  const form = document.getElementById('enquiryForm');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    document.getElementById('toastMsg').style.display = 'block';
+    submitLocked = true;
+    document.getElementById('submitBtn').textContent = dict[currentLang].btnSubmitted;
+  });
+
+  const burger = document.getElementById('burgerBtn');
+  const navlinks = document.getElementById('navLinks');
+  burger.addEventListener('click', function(){
+    const isOpen = navlinks.classList.toggle('open');
+    burger.classList.toggle('is-open', isOpen);
+    burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  navlinks.querySelectorAll('a').forEach(a=>{
+    a.addEventListener('click', ()=>{
+      navlinks.classList.remove('open');
+      burger.classList.remove('is-open');
+      burger.setAttribute('aria-expanded','false');
+    });
+  });
+
+  buildTicker();
+  applyLang('en');
+})();
+</script>
+
+</body>
+</html>
